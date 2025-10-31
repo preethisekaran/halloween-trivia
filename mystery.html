@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 The Halloween Manor Mystery 🔍</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #2c1810, #1a1a1a);
+            color: #d4af37;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+        .container {
+            background: linear-gradient(145deg, #3a2817, #2c1810);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+            border: 2px solid #d4af37;
+            position: relative;
+        }
+        .page {
+            display: none;
+        }
+        .page.active {
+            display: block;
+        }
+        h1 {
+            text-align: center;
+            color: #d4af37;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        h2 {
+            color: #ff6b35;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        .story-image {
+            width: 100%;
+            max-width: 400px;
+            height: 250px;
+            background: #1a1a1a;
+            border: 2px solid #d4af37;
+            border-radius: 10px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            color: #d4af37;
+        }
+        .clue-box {
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .clue-title {
+            font-weight: bold;
+            color: #ff6b35;
+            margin-bottom: 8px;
+        }
+        .suspects {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .suspect {
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .suspect:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: translateY(-2px);
+        }
+        .suspect-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        button {
+            background: #d4af37;
+            color: #1a1a1a;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: all 0.3s;
+        }
+        button:hover {
+            background: #ff6b35;
+            transform: translateY(-2px);
+        }
+        .navigation {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .page-counter {
+            text-align: center;
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 20px;
+        }
+        .evidence-list {
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .evidence-item {
+            margin: 8px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        .evidence-item:before {
+            content: "🔍";
+            position: absolute;
+            left: 0;
+        }
+        .final-choice {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .choice-btn {
+            background: rgba(212, 175, 55, 0.2);
+            border: 2px solid #d4af37;
+            color: #d4af37;
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+        }
+        .choice-btn:hover {
+            background: #d4af37;
+            color: #1a1a1a;
+        }
+        .reveal {
+            background: linear-gradient(145deg, #ff6b35, #d4af37);
+            color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Page 1: Introduction -->
+        <div class="page active" id="page1">
+            <div class="page-counter">Page 1 of 10</div>
+            <h1>🔍 The Halloween Manor Mystery 🔍</h1>
+            <div class="story-image">🏚️</div>
+            <h2>The Scene</h2>
+            <p>On a stormy Halloween night, the wealthy Lord Blackwood was found dead in his locked study at Blackwood Manor. The local constable has called upon you, the famous detective, to solve this puzzling case.</p>
+            <p>As you arrive at the imposing Victorian manor, lightning illuminates the Gothic architecture. The butler, Mr. Graves, greets you at the door with a grim expression.</p>
+            <div class="clue-box">
+                <div class="clue-title">🕯️ Initial Information:</div>
+                <p>• Time of death: Between 8-10 PM<br>
+                • Study door was locked from the inside<br>
+                • Key found in Lord Blackwood's pocket<br>
+                • No signs of forced entry</p>
+            </div>
+            <div class="navigation">
+                <button onclick="nextPage()">Enter the Manor 🚪</button>
+            </div>
+        </div>
+
+        <!-- Page 2: The Study -->
+        <div class="page" id="page2">
+            <div class="page-counter">Page 2 of 10</div>
+            <h2>🔍 The Locked Study</h2>
+            <div class="story-image">📚</div>
+            <p>You examine the study where Lord Blackwood's body was discovered. He sits slumped over his mahogany desk, a half-finished letter before him.</p>
+            <div class="clue-box">
+                <div class="clue-title">🔍 Evidence Found:</div>
+                <p>• A glass of brandy, still warm<br>
+                • An unfinished letter mentioning "changing the will"<br>
+                • A small vial hidden behind books (empty, smells of almonds)<br>
+                • Window is slightly open despite the storm</p>
+            </div>
+            <p>The constable mentions that only four people were in the manor tonight, all with access to the study earlier in the evening.</p>
+            <div class="navigation">
+                <button onclick="prevPage()">← Back</button>
+                <button onclick="nextPage()">Meet the Suspects 👥</button>
+            </div>
+        </div>
+
+        <!-- Page 3: The Suspects -->
+        <div class="page" id="page3">
+            <div class="page-counter">Page 3 of 10</div>
+            <h2>👥 The Four Suspects</h2>
+            <div class="suspects">
+                <div class="suspect">
+                    <div class="suspect-icon">👨‍💼</div>
+                    <strong>Mr. Graves</strong><br>
+                    <small>The Butler</small><br>
+                    Served the family for 20 years
+                </div>
+                <div class="suspect">
+                    <div class="suspect-icon">👩‍⚕️</div>
+                    <strong>Dr. Helena Marsh</strong><br>
+                    <small>Family Doctor</small><br>
+                    Visiting to check on Lord Blackwood's health
+                </div>
+                <div class="suspect">
+                    <div class="suspect-icon">👨‍💼</div>
+                    <strong>Charles Blackwood</strong><br>
+                    <small>Nephew & Heir</small><br>
+                    Recently returned from gambling debts
+                </div>
+                <div class="suspect">
+                    <div class="suspect-icon">👩‍🍳</div>
+                    <strong>Mrs. Pemberton</strong><br>
+                    <small>The Cook</small><br>
+                    Prepared dinner and evening refreshments
+                </div>
+            </div>
+            <p>Each had opportunity and potential motive. You must question them carefully to uncover the truth.</p>
+            <div class="navigation">
+                <button onclick="prevPage()">← Back</button>
+                <button onclick="nextPage()">Question Mr. Graves 🕵️</button>
+            </div>
+        </div>
+
+        <!-- Page 4: Mr. Graves -->
+        <div class="page" id="page4">
+            <div class="page-counter">Page 4 of 10</div>
+            <h2>🕵️ Questioning Mr. Graves</h2>
+            <div class="story-image">👨‍💼</div>
+            <p>The elderly butler wrings his hands nervously as you question him in the drawing room.</p>
+            <p><strong>"I served Lord Blackwood his evening brandy at 8:15 PM, just as I have every night for twenty years,"</strong> he says. <strong>"He seemed troubled about something - kept muttering about 'making things right' and 'protecting the family honor.'"</strong></p>
+            <div class="clue-box">
+                <div class="clue-title">🔍 Mr. Graves' Statement:</div>
+                <p>• Delivered brandy to study at 8:15 PM<br>
+                • Lord Blackwood was writing a letter<br>
+                • Mentioned seeing Dr. Marsh's medical bag in the hallway<br>
+                • Claims he was polishing silver in the pantry from 8:30-10:00 PM</p>
+            </div>
+            <p>You notice his hands shake slightly, and there's a small stain on his white gloves that looks suspiciously like ink.</p>
+            <div class="navigation">
+                <button onclick="prevPage()">← Back</button>
+                <button onclick="nextPage()">Question Dr. Marsh 🩺</button>
+            </div>
+        </div>
+
+        <!-- Page 5: Dr. Marsh -->
+        <div class="page" id="page5">
+            <div class="page-counter">Page 5 of 10</div>
+            <h2>🩺 Questioning Dr. Marsh</h2>
+            <div class="story-image">👩‍⚕️</div>
+            <p>Dr. Marsh sits calmly, her medical bag beside her chair. She speaks with clinical precision.</p>
+            <p><strong>"I arrived at 7:30 PM for Lord Blackwood's weekly examination. His heart condition had been worsening,"</strong> she explains. <strong>"I prescribed a new medication - digitalis - for his condition. Quite potent, but necessary."</strong></p>
+            <div class="clue-box">
+                <div class="clue-title">🔍 Dr. Marsh's Statement:</div>
+                <p>• Arrived at 7:30 PM for medical examination<br>
+                • Prescribed digitalis for heart condition<br>
+                • Left medical supplies in the study<br>
+                • Claims she was in the library reading from 8:45-10:15 PM</p>
+            </div>
+            <p>You notice her medical bag is slightly open, and there appears to be an empty vial slot in her medication case.</p>
+            <div class="navigation">
+                <button onclick="prevPage()">← Back</button>
+                <button onclick="nextPage()">Question Charles 💰</button>
+            </div>
+        </div>
+
+        <!-- Page 6: Charles -->
+        <div class="page" id="page6">
+            <div class="page-counter">Page 6 of 10</div>
+            <h2>💰 Questioning Charles Blackwood</h2>
+            <div class="story-image">👨‍💼</div>
+            <p>Charles paces nervously, clearly agitated. His expensive clothes show signs of recent travel.</p>
+            <p><strong>"Uncle was furious with me about the gambling debts,"</strong> he admits. <strong>"But I would never hurt him! He mentioned changing his will tonight - said he was disappointed in me, but family comes first."</strong></p>
+            <div class="clue-box">
+                <div class="clue-title">🔍 Charles' Statement:</div>
+                <p>• Owes £50,000 in gambling debts<br>
+                • Had heated argument with uncle at 8:00 PM<br>
+                • Uncle mentioned changing the will<br>
+                • Claims he was smoking in the garden from 8:30-10:00 PM</p>
+            </div>
+            <p>You notice mud on his shoes and the smell of tobacco on his clothes, but also detect a faint almond scent.</p>
+            <div class="navigation">
+                <button onclick="prevPage()">← Back</button>
+                <button onclick="nextPage()">Question Mrs. Pemberton 🍽️</button>
+            </div>
+        </div>
+
+        <!-- Page 7: Mrs. Pemberton -->
+        <div class="page" id="page7">
+            <div class="page-counter">Page 7 of 10</div>
+            <h2>🍽️ Questioning Mrs. Pemberton</h2>
+            <div class="story-image">👩‍🍳</div>
+            <p>The cook wipes her hands on her apron, looking worried but determined to help.</p>
+            <p><strong>"I prepared his lordship's favorite almond biscuits tonight,"</strong> she says. <strong>"He always enjoyed them with his evening brandy. I also prepared a special tea blend - he'd been having trouble sleeping lately."</strong></p>
+            <div class="clue-box">
+                <div class="clue-title">🔍 Mrs. Pemberton's Statement:</div>
+                <p>• Prepared almond biscuits and herbal tea<br>
+                • Delivered refreshments to study at 8:00 PM<br>
+                • Noticed Lord Blackwood seemed anxious<br>
+                • Claims she was cleaning kitchen from 8:15-10:30 PM</p>
+            </div>
+            <p>You notice she has access to various herbs and spices, and there's a faint almond scent in the kitchen.</p>
+            <div class="navigation">
+                <button onclick="prevPage()">← Back</button>
+                <button onclick="nextPage()">Examine More Evidence 🔍</button>
+            </div>
+        </div>
+
+        <!-- Page 8: Additional Evidence -->
+        <div class="page" id="page8">
+            <div class="page-counter">Page 8 of 10</div>
+            <h2>🔍 Analyzing the Evidence</h2>
+            <div class="story-image">🧪</div>
+            <p>You return to the study for a more thorough examination and make several crucial discoveries.</p>
+            <div class="evidence-list">
+                <div class="clue-title">🔬 Laboratory Analysis Results:</div>
+                <div class="evidence-item">The empty vial contained traces of cyanide</div>
+                <div class="evidence-item">The brandy glass shows no signs of poison</div>
+                <div class="evidence-item">Almond biscuits test positive for cyanide</div>
+                <div class="evidence-item">The unfinished letter reveals Lord Blackwood was leaving everything to charity</div>
+                <div class="evidence-item">Fingerprints on the vial belong to Dr. Marsh</div>
+                <div class="evidence-item">The window was opened from the inside after 9 PM</div>
+            </div>
+            <p>The pieces are starting to come together, but you need to determine who had both means and opportunity.</p>
+            <div class="navigation">
+                <button onclick="prevPage()">← Back</button>
+                <button onclick="nextPage()">Narrow Down Suspects 🎯</button>
+            </div>
+        </div>
+
+        <!-- Page 9: Final Suspects -->
+        <div class="page" id="page9">
+            <div class="page-counter">Page 9 of 10</div>
+            <h2>🎯 The Final Two Suspects</h2>
+            <p>Based on your investigation, you've narrowed it down to two prime suspects. Each had means, motive, and opportunity.</p>
+            
+            <div class="final-choice">
+                <div class="choice-btn" onclick="selectSuspect('marsh')">
+                    <div style="font-size: 40px; margin-bottom: 10px;">👩‍⚕️</div>
+                    <strong>Dr. Helena Marsh</strong><br><br>
+                    • Had access to cyanide<br>
+                    • Her vial was found at scene<br>
+                    • Medical knowledge of poisons<br>
+                    • Could lose patients if scandal emerged
+                </div>
+                <div class="choice-btn" onclick="selectSuspect('pemberton')">
+                    <div style="font-size: 40px; margin-bottom: 10px;">👩‍🍳</div>
+                    <strong>Mrs. Pemberton</strong><br><br>
+                    • Prepared the poisoned biscuits<br>
+                    • Access to almond extract (cyanide source)<br>
+                    • Would lose job if will changed<br>
+                    • Alone in kitchen during murder
+                </div>
+            </div>
+            
+            <p><strong>Choose wisely, detective. Your reputation depends on solving this case correctly!</strong></p>
+            
+            <div class="navigation">
+                <button onclick="prevPage()">← Back</button>
+            </div>
+        </div>
+
+        <!-- Page 10: The Reveal -->
+        <div class="page" id="page10">
+            <div class="page-counter">Page 10 of 10</div>
+            <h2 id="reveal-title">🎭 The Truth Revealed</h2>
+            <div class="story-image" id="reveal-icon">👩‍🍳</div>
+            <div class="reveal" id="reveal-text">
+                <!-- Content will be filled by JavaScript -->
+            </div>
+            <div id="solution-explanation">
+                <!-- Content will be filled by JavaScript -->
+            </div>
+            <div class="navigation">
+                <button onclick="prevPage()">← Back</button>
+                <button onclick="window.location.href='index.html'">🏠 Main Menu</button>
+                <button onclick="restartMystery()">🔄 Play Again</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 1;
+        let selectedSuspect = '';
+
+        function showPage(pageNum) {
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            document.getElementById(`page${pageNum}`).classList.add('active');
+            currentPage = pageNum;
+        }
+
+        function nextPage() {
+            if (currentPage < 10) {
+                showPage(currentPage + 1);
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 1) {
+                showPage(currentPage - 1);
+            }
+        }
+
+        function selectSuspect(suspect) {
+            selectedSuspect = suspect;
+            showReveal();
+            showPage(10);
+        }
+
+        function showReveal() {
+            const revealTitle = document.getElementById('reveal-title');
+            const revealIcon = document.getElementById('reveal-icon');
+            const revealText = document.getElementById('reveal-text');
+            const solutionExplanation = document.getElementById('solution-explanation');
+
+            if (selectedSuspect === 'pemberton') {
+                revealTitle.textContent = '🎉 Correct! Case Solved!';
+                revealIcon.textContent = '👩‍🍳';
+                revealText.innerHTML = `
+                    <h3>Mrs. Pemberton is the murderer!</h3>
+                    <p>Congratulations, detective! You've solved the case correctly.</p>
+                `;
+                solutionExplanation.innerHTML = `
+                    <div class="clue-box">
+                        <div class="clue-title">🔍 How the Crime Was Committed:</div>
+                        <p><strong>The Method:</strong> Mrs. Pemberton used almond extract (which contains cyanide compounds) to poison the almond biscuits she prepared for Lord Blackwood.</p>
+                        
+                        <p><strong>The Motive:</strong> She overheard Lord Blackwood's plan to change his will and leave everything to charity, which would mean losing her job and home at the manor.</p>
+                        
+                        <p><strong>The Deception:</strong> She planted Dr. Marsh's empty medical vial in the study to frame the doctor, knowing about the digitalis prescription.</p>
+                        
+                        <p><strong>Key Evidence:</strong><br>
+                        • The poisoned almond biscuits (her specialty)<br>
+                        • Access to almond extract in the kitchen<br>
+                        • Opportunity to plant the vial<br>
+                        • The almond scent detected on multiple suspects was from her baking</p>
+                        
+                        <p><strong>The Final Clue:</strong> Only Mrs. Pemberton had access to prepare the food AND plant evidence to frame another suspect.</p>
+                    </div>
+                `;
+            } else {
+                revealTitle.textContent = '❌ Case Unsolved';
+                revealIcon.textContent = '👩‍⚕️';
+                revealText.innerHTML = `
+                    <h3>Dr. Marsh was innocent!</h3>
+                    <p>While Dr. Marsh had access to poisons and her vial was found at the scene, she was framed.</p>
+                `;
+                solutionExplanation.innerHTML = `
+                    <div class="clue-box">
+                        <div class="clue-title">🔍 The Real Solution:</div>
+                        <p><strong>Mrs. Pemberton</strong> was the actual murderer. She used almond extract to poison the biscuits and planted Dr. Marsh's vial to frame her.</p>
+                        
+                        <p><strong>Why Dr. Marsh was innocent:</strong><br>
+                        • The poison was in the biscuits, not administered medically<br>
+                        • Her vial was planted evidence<br>
+                        • She had no motive - Lord Blackwood's death meant losing a patient<br>
+                        • The real killer needed access to both the food AND the study to plant evidence</p>
+                        
+                        <p>Better luck next time, detective!</p>
+                    </div>
+                `;
+            }
+        }
+
+        function restartMystery() {
+            currentPage = 1;
+            selectedSuspect = '';
+            showPage(1);
+        }
+    </script>
+</body>
+</html>

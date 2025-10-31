@@ -14,24 +14,29 @@
             color: #ff6b35;
             min-height: 100vh;
             text-align: center;
+            position: relative;
+            overflow-x: hidden;
         }
         .container {
             background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-            padding: 40px;
+            padding: 40px 30px;
             border-radius: 15px;
             box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
             border: 2px solid #ff6b35;
+            position: relative;
+            z-index: 10;
         }
         h1 {
-            font-size: 32px;
-            margin-bottom: 40px;
+            font-size: 28px;
+            margin-bottom: 30px;
+            line-height: 1.2;
         }
         .game-btn {
             display: block;
-            width: 100%;
+            width: calc(100% - 40px);
             padding: 20px;
-            margin: 20px 0;
-            font-size: 20px;
+            margin: 15px auto;
+            font-size: 18px;
             border: 2px solid #ff6b35;
             background: #1a1a1a;
             color: #ff6b35;
@@ -40,20 +45,91 @@
             transition: all 0.3s;
             font-weight: bold;
             text-decoration: none;
+            box-sizing: border-box;
         }
         .game-btn:hover {
             background: #ff6b35;
             color: #1a1a1a;
             box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
+            transform: translateY(-2px);
         }
         .game-description {
             font-size: 14px;
-            margin-top: 10px;
+            margin-top: 8px;
             opacity: 0.8;
+            line-height: 1.3;
+        }
+        
+        /* Flying Ghosts Animation */
+        .ghost {
+            position: fixed;
+            font-size: 30px;
+            z-index: 1;
+            animation: float 8s ease-in-out infinite;
+            opacity: 0.7;
+        }
+        .ghost1 {
+            top: 10%;
+            left: -50px;
+            animation: flyRight 12s linear infinite;
+        }
+        .ghost2 {
+            top: 30%;
+            right: -50px;
+            animation: flyLeft 15s linear infinite;
+        }
+        .ghost3 {
+            top: 60%;
+            left: -50px;
+            animation: flyRight 18s linear infinite;
+            animation-delay: -6s;
+        }
+        .ghost4 {
+            top: 80%;
+            right: -50px;
+            animation: flyLeft 20s linear infinite;
+            animation-delay: -10s;
+        }
+        
+        @keyframes flyRight {
+            0% { left: -50px; }
+            100% { left: calc(100vw + 50px); }
+        }
+        
+        @keyframes flyLeft {
+            0% { right: -50px; }
+            100% { right: calc(100vw + 50px); }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-10px) rotate(2deg); }
+            50% { transform: translateY(-5px) rotate(-1deg); }
+            75% { transform: translateY(-15px) rotate(1deg); }
+        }
+        
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 24px;
+            }
+            .game-btn {
+                font-size: 16px;
+                padding: 18px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Flying Ghosts -->
+    <div class="ghost ghost1">👻</div>
+    <div class="ghost ghost2">🎃</div>
+    <div class="ghost ghost3">👻</div>
+    <div class="ghost ghost4">🦇</div>
+    
     <div class="container">
         <h1>🎃 Halloween Quiz Games 👻</h1>
         

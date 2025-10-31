@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎃 Halloween Trivia Quiz 🎃</title>
+    <title>🎃 Halloween Quiz Games 🎃</title>
     <style>
         body {
             font-family: 'Creepster', Arial, sans-serif;
@@ -13,189 +13,59 @@
             background: linear-gradient(135deg, #1a1a1a, #2d1b69);
             color: #ff6b35;
             min-height: 100vh;
+            text-align: center;
         }
         .container {
             background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-            padding: 30px;
+            padding: 40px;
             border-radius: 15px;
             box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
             border: 2px solid #ff6b35;
         }
-        .question {
+        h1 {
+            font-size: 32px;
+            margin-bottom: 40px;
+        }
+        .game-btn {
+            display: block;
+            width: 100%;
+            padding: 20px;
+            margin: 20px 0;
             font-size: 20px;
-            margin-bottom: 20px;
-            font-weight: bold;
-        }
-        .options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        button {
-            padding: 15px;
-            font-size: 16px;
             border: 2px solid #ff6b35;
             background: #1a1a1a;
             color: #ff6b35;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s;
             font-weight: bold;
+            text-decoration: none;
         }
-        button:hover {
+        .game-btn:hover {
             background: #ff6b35;
             color: #1a1a1a;
-            box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.5);
         }
-        .correct {
-            background: #28a745 !important;
-            color: white !important;
-            box-shadow: 0 0 15px rgba(40, 167, 69, 0.5) !important;
-        }
-        .incorrect {
-            background: #dc3545 !important;
-            color: white !important;
-            box-shadow: 0 0 15px rgba(220, 53, 69, 0.5) !important;
-        }
-        .score {
-            text-align: center;
-            font-size: 24px;
-            margin: 20px 0;
-        }
-        .hidden {
-            display: none;
-        }
-        #restart {
-            background: #ff6b35;
-            color: #1a1a1a;
-            margin-top: 20px;
+        .game-description {
+            font-size: 14px;
+            margin-top: 10px;
+            opacity: 0.8;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div id="quiz">
-            <div class="score">Question <span id="current">1</span> of <span id="total">5</span></div>
-            <div class="question" id="question"></div>
-            <div class="options" id="options"></div>
-        </div>
+        <h1>🎃 Halloween Quiz Games 👻</h1>
         
-        <div id="results" class="hidden">
-            <h2>🎃 Spooky Quiz Complete! 👻</h2>
-            <div class="score">Your Score: <span id="final-score"></span></div>
-            <button id="restart">🦇 Play Again 🦇</button>
-        </div>
+        <a href="trivia.html" class="game-btn">
+            🧙‍♀️ Halloween Trivia
+            <div class="game-description">15 spooky multiple choice questions</div>
+        </a>
+        
+        <a href="two-truths.html" class="game-btn">
+            🕷️ 2 Truths & 1 Lie
+            <div class="game-description">10 rounds of spooky facts vs fiction</div>
+        </a>
     </div>
-
-    <script>
-        const questions = [
-            {
-                question: "🎃 What vegetable was originally used to make jack-o'-lanterns?",
-                options: ["Pumpkins", "Turnips", "Potatoes", "Carrots"],
-                correct: 1
-            },
-            {
-                question: "👻 In which country did Halloween originate?",
-                options: ["United States", "England", "Ireland", "Scotland"],
-                correct: 2
-            },
-            {
-                question: "🦇 What is a group of witches called?",
-                options: ["A flock", "A coven", "A pack", "A murder"],
-                correct: 1
-            },
-            {
-                question: "🕷️ Which horror movie features the character Michael Myers?",
-                options: ["Friday the 13th", "Nightmare on Elm Street", "Halloween", "Scream"],
-                correct: 2
-            },
-            {
-                question: "🧙‍♀️ What do you call a fear of spiders?",
-                options: ["Arachnophobia", "Claustrophobia", "Acrophobia", "Nyctophobia"],
-                correct: 0
-            },
-            {
-                question: "⚰️ In vampire folklore, what repels vampires?",
-                options: ["Silver", "Garlic", "Salt", "Iron"],
-                correct: 1
-            },
-            {
-                question: "🌙 What happens during a full moon in werewolf legends?",
-                options: ["They sleep", "They transform", "They become invisible", "They fly"],
-                correct: 1
-            },
-            {
-                question: "💀 What is the name of the Celtic festival that Halloween originated from?",
-                options: ["Beltane", "Samhain", "Lughnasadh", "Imbolc"],
-                correct: 1
-            }
-        ];
-
-        let currentQuestion = 0;
-        let score = 0;
-
-        function loadQuestion() {
-            const q = questions[currentQuestion];
-            document.getElementById('question').textContent = q.question;
-            document.getElementById('current').textContent = currentQuestion + 1;
-            document.getElementById('total').textContent = questions.length;
-            
-            const optionsDiv = document.getElementById('options');
-            optionsDiv.innerHTML = '';
-            
-            q.options.forEach((option, index) => {
-                const button = document.createElement('button');
-                button.textContent = option;
-                button.onclick = () => selectAnswer(index);
-                optionsDiv.appendChild(button);
-            });
-        }
-
-        function selectAnswer(selected) {
-            const buttons = document.querySelectorAll('#options button');
-            const correct = questions[currentQuestion].correct;
-            
-            buttons.forEach((btn, index) => {
-                btn.disabled = true;
-                if (index === correct) {
-                    btn.classList.add('correct');
-                } else if (index === selected && index !== correct) {
-                    btn.classList.add('incorrect');
-                }
-            });
-            
-            if (selected === correct) {
-                score++;
-            }
-            
-            setTimeout(() => {
-                currentQuestion++;
-                if (currentQuestion < questions.length) {
-                    loadQuestion();
-                } else {
-                    showResults();
-                }
-            }, 1500);
-        }
-
-        function showResults() {
-            document.getElementById('quiz').classList.add('hidden');
-            document.getElementById('results').classList.remove('hidden');
-            document.getElementById('final-score').textContent = `${score}/${questions.length}`;
-        }
-
-        function restart() {
-            currentQuestion = 0;
-            score = 0;
-            document.getElementById('quiz').classList.remove('hidden');
-            document.getElementById('results').classList.add('hidden');
-            loadQuestion();
-        }
-
-        document.getElementById('restart').onclick = restart;
-        
-        // Start the quiz
-        loadQuestion();
-    </script>
 </body>
 </html>

@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎃 Halloween Trivia 🎃</title>
+    <style>
+        body {
+            font-family: 'Creepster', Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a1a, #2d1b69);
+            color: #ff6b35;
+            min-height: 100vh;
+        }
+        .container {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+            border: 2px solid #ff6b35;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            line-height: 1.4;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        button {
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #ff6b35;
+            background: #1a1a1a;
+            color: #ff6b35;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #ff6b35;
+            color: #1a1a1a;
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+        }
+        .correct {
+            background: #28a745 !important;
+            color: white !important;
+            box-shadow: 0 0 15px rgba(40, 167, 69, 0.5) !important;
+        }
+        .incorrect {
+            background: #dc3545 !important;
+            color: white !important;
+            box-shadow: 0 0 15px rgba(220, 53, 69, 0.5) !important;
+        }
+        .score {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .hidden {
+            display: none;
+        }
+        #restart, .menu-btn {
+            background: #ff6b35;
+            color: #1a1a1a;
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        .menu-btn {
+            background: #666;
+        }
+        .results-buttons {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="quiz">
+            <div class="score">Question <span id="current">1</span> of <span id="total">15</span></div>
+            <div class="question" id="question"></div>
+            <div class="options" id="options"></div>
+        </div>
+        
+        <div id="results" class="hidden">
+            <h2>🎃 Halloween Trivia Complete! 👻</h2>
+            <div class="score">Your Score: <span id="final-score"></span></div>
+            <div class="results-buttons">
+                <button id="restart">🦇 Play Again 🦇</button>
+                <button class="menu-btn" onclick="window.location.href='index.html'">🏠 Main Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "🎃 What vegetable was originally used to make jack-o'-lanterns?",
+                options: ["Pumpkins", "Turnips", "Potatoes", "Carrots"],
+                correct: 1
+            },
+            {
+                question: "👻 In which country did Halloween originate?",
+                options: ["United States", "England", "Ireland", "Scotland"],
+                correct: 2
+            },
+            {
+                question: "🦇 What is a group of witches called?",
+                options: ["A flock", "A coven", "A pack", "A murder"],
+                correct: 1
+            },
+            {
+                question: "🕷️ Which horror movie features the character Michael Myers?",
+                options: ["Friday the 13th", "Nightmare on Elm Street", "Halloween", "Scream"],
+                correct: 2
+            },
+            {
+                question: "🧙‍♀️ What do you call a fear of spiders?",
+                options: ["Arachnophobia", "Claustrophobia", "Acrophobia", "Nyctophobia"],
+                correct: 0
+            },
+            {
+                question: "⚰️ In vampire folklore, what repels vampires?",
+                options: ["Silver", "Garlic", "Salt", "Iron"],
+                correct: 1
+            },
+            {
+                question: "🌙 What happens during a full moon in werewolf legends?",
+                options: ["They sleep", "They transform", "They become invisible", "They fly"],
+                correct: 1
+            },
+            {
+                question: "💀 What is the name of the Celtic festival that Halloween originated from?",
+                options: ["Beltane", "Samhain", "Lughnasadh", "Imbolc"],
+                correct: 1
+            },
+            {
+                question: "🎭 Which classic monster was created by Mary Shelley?",
+                options: ["Dracula", "Frankenstein's Monster", "The Mummy", "The Wolfman"],
+                correct: 1
+            },
+            {
+                question: "🕯️ What does the word 'Halloween' mean?",
+                options: ["Holy Evening", "Harvest Evening", "All Hallows' Evening", "Autumn Evening"],
+                correct: 2
+            },
+            {
+                question: "🦴 What bone are witches said to ride instead of broomsticks in some folklore?",
+                options: ["Femur", "Spine", "Rib", "Skull"],
+                correct: 0
+            },
+            {
+                question: "🎪 In what decade did trick-or-treating become popular in America?",
+                options: ["1920s", "1930s", "1940s", "1950s"],
+                correct: 3
+            },
+            {
+                question: "🧛‍♂️ According to legend, what can't vampires see in mirrors?",
+                options: ["Their fangs", "Their reflection", "Their clothes", "Their shadow"],
+                correct: 1
+            },
+            {
+                question: "🏚️ What is the fear of haunted houses called?",
+                options: ["Phasmophobia", "Domatophobia", "Spectrophobia", "Nyctophobia"],
+                correct: 0
+            },
+            {
+                question: "🌕 On what day of the week does Halloween fall most frequently?",
+                options: ["Friday", "Saturday", "Sunday", "Tuesday"],
+                correct: 3
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('question').textContent = q.question;
+            document.getElementById('current').textContent = currentQuestion + 1;
+            document.getElementById('total').textContent = questions.length;
+            
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            
+            q.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.onclick = () => selectAnswer(index);
+                optionsDiv.appendChild(button);
+            });
+        }
+
+        function selectAnswer(selected) {
+            const buttons = document.querySelectorAll('#options button');
+            const correct = questions[currentQuestion].correct;
+            
+            buttons.forEach((btn, index) => {
+                btn.disabled = true;
+                if (index === correct) {
+                    btn.classList.add('correct');
+                } else if (index === selected && index !== correct) {
+                    btn.classList.add('incorrect');
+                }
+            });
+            
+            if (selected === correct) {
+                score++;
+            }
+            
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    showResults();
+                }
+            }, 1500);
+        }
+
+        function showResults() {
+            document.getElementById('quiz').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden');
+            document.getElementById('final-score').textContent = `${score}/${questions.length}`;
+        }
+
+        function restart() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('quiz').classList.remove('hidden');
+            document.getElementById('results').classList.add('hidden');
+            loadQuestion();
+        }
+
+        document.getElementById('restart').onclick = restart;
+        
+        // Start the quiz
+        loadQuestion();
+    </script>
+</body>
+</html>

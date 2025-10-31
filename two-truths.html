@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🕷️ 2 Truths & 1 Lie 🕷️</title>
+    <style>
+        body {
+            font-family: 'Creepster', Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a1a, #2d1b69);
+            color: #ff6b35;
+            min-height: 100vh;
+        }
+        .container {
+            background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.3);
+            border: 2px solid #ff6b35;
+        }
+        .question {
+            font-size: 18px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            line-height: 1.4;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        button {
+            padding: 15px;
+            font-size: 14px;
+            border: 2px solid #ff6b35;
+            background: #1a1a1a;
+            color: #ff6b35;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            text-align: left;
+            line-height: 1.3;
+        }
+        button:hover {
+            background: #ff6b35;
+            color: #1a1a1a;
+            box-shadow: 0 0 15px rgba(255, 107, 53, 0.5);
+        }
+        .correct {
+            background: #28a745 !important;
+            color: white !important;
+            box-shadow: 0 0 15px rgba(40, 167, 69, 0.5) !important;
+        }
+        .incorrect {
+            background: #dc3545 !important;
+            color: white !important;
+            box-shadow: 0 0 15px rgba(220, 53, 69, 0.5) !important;
+        }
+        .score {
+            text-align: center;
+            font-size: 24px;
+            margin: 20px 0;
+        }
+        .hidden {
+            display: none;
+        }
+        #restart, .menu-btn {
+            background: #ff6b35;
+            color: #1a1a1a;
+            margin: 10px 5px;
+            font-size: 16px;
+        }
+        .menu-btn {
+            background: #666;
+        }
+        .results-buttons {
+            text-align: center;
+        }
+        .instruction {
+            text-align: center;
+            font-size: 14px;
+            margin-bottom: 20px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="quiz">
+            <div class="score">Round <span id="current">1</span> of <span id="total">10</span></div>
+            <div class="instruction">Pick the LIE from the three statements below:</div>
+            <div class="question" id="question"></div>
+            <div class="options" id="options"></div>
+        </div>
+        
+        <div id="results" class="hidden">
+            <h2>🕷️ 2 Truths & 1 Lie Complete! 🧙‍♀️</h2>
+            <div class="score">Your Score: <span id="final-score"></span></div>
+            <div class="results-buttons">
+                <button id="restart">🦇 Play Again 🦇</button>
+                <button class="menu-btn" onclick="window.location.href='index.html'">🏠 Main Menu</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "🏰 Which statement is the LIE?",
+                options: [
+                    "The Tower of London is said to be haunted by Anne Boleyn's headless ghost",
+                    "Edgar Allan Poe died under mysterious circumstances in Baltimore",
+                    "The Salem Witch Trials resulted in over 500 executions"
+                ],
+                correct: 2
+            },
+            {
+                question: "🦇 Which statement is the LIE?",
+                options: [
+                    "Bats can eat up to 1,000 mosquitoes per hour",
+                    "Vampire bats only exist in Central and South America",
+                    "All bats are blind and rely solely on echolocation"
+                ],
+                correct: 2
+            },
+            {
+                question: "🕷️ Which statement is the LIE?",
+                options: [
+                    "Black widow spiders eat their mates after reproduction",
+                    "Tarantulas can live up to 30 years",
+                    "All spiders have 6 legs and spin webs"
+                ],
+                correct: 2
+            },
+            {
+                question: "⚰️ Which statement is the LIE?",
+                options: [
+                    "Ancient Egyptians mummified cats along with their owners",
+                    "The word 'mummy' comes from the Arabic word 'mumiya'",
+                    "All Egyptian mummies were buried with their hearts removed"
+                ],
+                correct: 2
+            },
+            {
+                question: "🧙‍♀️ Which statement is the LIE?",
+                options: [
+                    "The Salem Witch Trials lasted from 1692-1693",
+                    "More men than women were accused of witchcraft in Salem",
+                    "The trials were sparked by strange behavior in young girls"
+                ],
+                correct: 1
+            },
+            {
+                question: "👻 Which statement is the LIE?",
+                options: [
+                    "The White House is considered one of America's most haunted buildings",
+                    "Ghost sightings increase by 70% during October",
+                    "Abraham Lincoln's ghost has been reported in the Lincoln Bedroom"
+                ],
+                correct: 1
+            },
+            {
+                question: "🎃 Which statement is the LIE?",
+                options: [
+                    "Pumpkins are 90% water",
+                    "The largest pumpkin ever grown weighed over 2,600 pounds",
+                    "Pumpkins are native to North America"
+                ],
+                correct: 0
+            },
+            {
+                question: "🧛‍♂️ Which statement is the LIE?",
+                options: [
+                    "Vlad the Impaler inspired Bram Stoker's Dracula",
+                    "Vampire folklore exists in cultures worldwide",
+                    "Garlic was first used against vampires in Romanian folklore"
+                ],
+                correct: 2
+            },
+            {
+                question: "🌙 Which statement is the LIE?",
+                options: [
+                    "Werewolf legends exist in cultures across six continents",
+                    "The full moon occurs exactly every 29.5 days",
+                    "Hospital emergency rooms see more injuries during full moons"
+                ],
+                correct: 2
+            },
+            {
+                question: "💀 Which statement is the LIE?",
+                options: [
+                    "Day of the Dead originated in Mexico over 3,000 years ago",
+                    "Sugar skulls are traditionally made with real human skull molds",
+                    "Marigolds are used to guide spirits back to the living world"
+                ],
+                correct: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('question').textContent = q.question;
+            document.getElementById('current').textContent = currentQuestion + 1;
+            document.getElementById('total').textContent = questions.length;
+            
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            
+            q.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.textContent = option;
+                button.onclick = () => selectAnswer(index);
+                optionsDiv.appendChild(button);
+            });
+        }
+
+        function selectAnswer(selected) {
+            const buttons = document.querySelectorAll('#options button');
+            const correct = questions[currentQuestion].correct;
+            
+            buttons.forEach((btn, index) => {
+                btn.disabled = true;
+                if (index === correct) {
+                    btn.classList.add('correct');
+                } else if (index === selected && index !== correct) {
+                    btn.classList.add('incorrect');
+                }
+            });
+            
+            if (selected === correct) {
+                score++;
+            }
+            
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    showResults();
+                }
+            }, 2000);
+        }
+
+        function showResults() {
+            document.getElementById('quiz').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden');
+            document.getElementById('final-score').textContent = `${score}/${questions.length}`;
+        }
+
+        function restart() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('quiz').classList.remove('hidden');
+            document.getElementById('results').classList.add('hidden');
+            loadQuestion();
+        }
+
+        document.getElementById('restart').onclick = restart;
+        
+        // Start the quiz
+        loadQuestion();
+    </script>
+</body>
+</html>
